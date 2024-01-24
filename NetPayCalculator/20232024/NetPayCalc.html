@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Net Pay Calculator</title>
+</head>
+<body>
+
+    <h1>Net Pay Calculator (Australia)</h1>
+        
+    <form id="calculatorForm" action="/calculate" method="post">
+        <label for="income">Taxable Income (AUD):</label>
+        <input type="number" id="income" name="income" required>
+
+        <br>
+
+        <label for="hecsDebt">HECS Debt (AUD):</label>
+        <input type="number" id="hecsDebt" name="hecsDebt" required>
+
+        <br>
+
+        <label for="payFrequency">Pay Frequency:</label>
+        <select id="payFrequency" name="payFrequency" required>
+            <option value="weekly">Weekly</option>
+            <option value="fortnightly">Fortnightly</option>
+            <option value="monthly">Monthly</option>
+        </select>
+
+        <br>
+
+        <button type="button" onclick="calculateNetPay()">Calculate Net Pay</button>
+    </form>
+
+    <p>{{ result }} </p>
+
+</body>
+</html>
