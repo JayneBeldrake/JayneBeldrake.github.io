@@ -32,7 +32,29 @@
         <button type="button" onclick="calculateNetPay()">Calculate Net Pay</button>
     </form>
 
-    <p>{{ result }} </p>
+    <script>
+        async function calculateNetPay() {
+            const salary = parseFloat(document.getElementById('income').value);
+            const hecsDebt = parseFloat(document.getElementById('hecsDebt').value);
+            const payFrequency = document.getElementById('payFrequency').value;
+    
+            const response = await fetch('YOUR_API_GATEWAY_URL', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    salary: income,
+                    hecsDebt: hecsDebt,
+                    payIncrement: payFrequency,
+                }),
+            });
+    
+            const result = await response.json();
+    
+            document.getElementById('result').innerHTML = `Net Pay: $${result} ${payFrequency}`;
+        }
+    </script>
 
 </body>
 </html>
