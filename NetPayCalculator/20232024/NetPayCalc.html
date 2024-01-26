@@ -45,11 +45,11 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: {
+                body: JSON.stringify({
                     salary: salary,
                     hecsDebt: hecsDebt,
                     payIncrement: payFrequency,
-                },
+                }),
             });
     
             const resultElement = document.getElementById('result');
