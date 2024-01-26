@@ -11,17 +11,17 @@
         
     <form id="calculatorForm" action="/calculate" method="post">
         <label for="salary">Taxable Income (AUD):</label>
-        <input type="number" id="salary" name="salary" required>
+        <input type="number" id="salary" name="salary" value="68900" required>
 
         <br>
 
         <label for="hecsDebt">HECS Debt (AUD):</label>
-        <input type="number" id="hecsDebt" name="hecsDebt" required>
+        <input type="number" id="hecsDebt" name="hecsDebt" value="24700" required>
 
         <br>
 
         <label for="payIncrement">Pay Frequency:</label>
-        <select id="payIncrement" name="payIncrement" required>
+        <select id="payIncrement" name="payIncrement" value="weekly" required>
             <option value="weekly">Weekly</option>
             <option value="fortnightly">Fortnightly</option>
             <option value="monthly">Monthly</option>
@@ -38,27 +38,46 @@
         async function calculateNetPay() {
             const salary = parseFloat(document.getElementById('salary').value);
             const hecsDebt = parseFloat(document.getElementById('hecsDebt').value);
-            const payFrequency = document.getElementById('payIncrement').value;
+            const payIncrement = document.getElementById('payIncrement').value;
     
             const response = await fetch('https://xzjww7d6y7.execute-api.ap-southeast-2.amazonaws.com/CalculatorStage/calc', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    "hecsDebt": hecsDebt,
-                    "salary": salary,
-                    "payIncrement": payFrequency,
-                }),
+                body: JSON.stringify({salary: salary, hecsDebt: hecsDebt, payIncrement: payIncrement})
             });
     
-            const resultElement = document.getElementById('result');
-            const resultText = `Net Pay: $${result.netPay} ${payFrequency}`;
+            try {
+                const result = await response.json();
 
-            if (resultElement) {
-                resultElement.innerHTML = resultText;
-            } else {
-                console.error('Result element not found:', resultText);
+                console.log('Response from server:', result);  // Log the response to the console
+                
+                if (response.status === 200) {
+                    const resultElement = document.getElementById('result');
+                    const resultText = `
+                        <p>Message: ${result.body.message} </p>
+                        <p>Net Annual Salary: $${result.body.salary} </p>
+                        <p>Tax Paid Annually: $${result.body.taxpaid} </p>
+                        <p>HECS Paid Annually: $${result.body.hecspaid} </p>
+                        <br>
+                        <p>Pay Frequency: ${result.body.payIncrement} </p>
+                        <p>Each Pay: $${result.body.netPay} ${payIncrement}</p>
+                        <p>Tax Paid each pay: $${result.body.incTax} ${payIncrement}</p>
+                        <p>HECS Paid each pay: $${result.body.incHecs} ${payIncrement}</p>
+                        
+                    `;
+                
+                    if (resultElement) {
+                        resultElement.innerHTML = resultText;
+                    } else {
+                        console.error('Result element not found:', resultText);
+                    }
+                } else {
+                    console.error('Error response from server:', result);
+                }
+            } catch (error) {
+                console.error('Error parsing JSON response:', error);
             }
         }
     </script>
