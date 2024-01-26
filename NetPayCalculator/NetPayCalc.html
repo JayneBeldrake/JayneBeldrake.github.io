@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Net Pay Calculator</title>
+</head>
+<body>
+
+    <h1>Net Pay Calculator (Australia) </h1>
+    <h4>HECS brackets taken from 23/24 Financial Year</h4>
+        
+    <form id="calculatorForm" action="/calculate" method="post">
+        <label for="salary">Taxable Income (AUD):</label>
+        <input type="number" id="salary" name="salary" value="68900" required>
+        <br>
+        <label for="hecsDebt">HECS Debt (AUD):</label>
+        <input type="number" id="hecsDebt" name="hecsDebt" value="24700" required>
+
+        <br>
+
+        <label for="payIncrement">Pay Frequency:</label>
+        <select id="payIncrement" name="payIncrement" value="weekly" required>
+            <option value="weekly">Weekly</option>
+            <option value="fortnightly">Fortnightly</option>
+            <option value="monthly">Monthly</option>
+        </select>
+
+        <br>
+        <br>
+
+        <button type="button" onclick="calculate2324NetPay()">Calculate 2023/24 Net Pay</button>
+        <br>
+        <button type="button" onclick="calculate2425ONetPay()">Calculate 2024/25 Net Pay Orig Stg 3</button>
+        <br>
+        <button type="button" onclick="calculate2425NNetPay()">Calculate 2024/25 Net Pay New Stg 3</button>
+    </form>
+
+    <div id="result"> </div>
+
+    <script>
+        async function calculate2324NetPay() {
+            const salary = parseFloat(document.getElementById('salary').value);
+            const hecsDebt = parseFloat(document.getElementById('hecsDebt').value);
+            const payIncrement = document.getElementById('payIncrement').value;
+    
+            const response = await fetch('https://91ifoul88b.execute-api.ap-southeast-2.amazonaws.com/NetPayCalcStage/202324', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({salary: salary, hecsDebt: hecsDebt, payIncrement: payIncrement})
+            });
+    
+            try {
+                const result = await response.json();
+
+                console.log('Response from server:', result);  // Log the response to the console
+                
+                if (response.status === 200) {
+                    const resultElement = document.getElementById('result');
+                    const resultText = `
+                        <p>Message: ${result.body.message} </p>
+                        <p>Net Annual Salary: $${result.body.salary} </p>
+                        <p>Tax Paid Annually: $${result.body.taxpaid} </p>
+                        <p>HECS Paid Annually: $${result.body.hecspaid} </p>
+                        <br>
+                        <p>Pay Frequency: ${result.body.payIncrement} </p>
+                        <p>Each Pay: $${result.body.netPay} ${payIncrement}</p>
+                        <p>Tax Paid each pay: $${result.body.incTax} ${payIncrement}</p>
+                        <p>HECS Paid each pay: $${result.body.incHecs} ${payIncrement}</p>
+                        
+                    `;
+                
+                    if (resultElement) {
+                        resultElement.innerHTML = resultText;
+                    } else {
+                        console.error('Result element not found:', resultText);
+                    }
+                } else {
+                    console.error('Error response from server:', result);
+                }
+            } catch (error) {
+                console.error('Error parsing JSON response:', error);
+            }
+        }
+
+        async function calculate2425ONetPay() {
+            const salary = parseFloat(document.getElementById('salary').value);
+            const hecsDebt = parseFloat(document.getElementById('hecsDebt').value);
+            const payIncrement = document.getElementById('payIncrement').value;
+    
+            const response = await fetch('https://91ifoul88b.execute-api.ap-southeast-2.amazonaws.com/NetPayCalcStage/202425O', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({salary: salary, hecsDebt: hecsDebt, payIncrement: payIncrement})
+            });
+    
+            try {
+                const result = await response.json();
+
+                console.log('Response from server:', result);  // Log the response to the console
+                
+                if (response.status === 200) {
+                    const resultElement = document.getElementById('result');
+                    const resultText = `
+                        <p>Message: ${result.body.message} </p>
+                        <p>Net Annual Salary: $${result.body.salary} </p>
+                        <p>Tax Paid Annually: $${result.body.taxpaid} </p>
+                        <p>HECS Paid Annually: $${result.body.hecspaid} </p>
+                        <br>
+                        <p>Pay Frequency: ${result.body.payIncrement} </p>
+                        <p>Each Pay: $${result.body.netPay} ${payIncrement}</p>
+                        <p>Tax Paid each pay: $${result.body.incTax} ${payIncrement}</p>
+                        <p>HECS Paid each pay: $${result.body.incHecs} ${payIncrement}</p>
+                        
+                    `;
+                
+                    if (resultElement) {
+                        resultElement.innerHTML = resultText;
+                    } else {
+                        console.error('Result element not found:', resultText);
+                    }
+                } else {
+                    console.error('Error response from server:', result);
+                }
+            } catch (error) {
+                console.error('Error parsing JSON response:', error);
+            }
+        }
+
+        async function calculate2425NNetPay() {
+            const salary = parseFloat(document.getElementById('salary').value);
+            const hecsDebt = parseFloat(document.getElementById('hecsDebt').value);
+            const payIncrement = document.getElementById('payIncrement').value;
+    
+            const response = await fetch('https://91ifoul88b.execute-api.ap-southeast-2.amazonaws.com/NetPayCalcStage/202425N', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({salary: salary, hecsDebt: hecsDebt, payIncrement: payIncrement})
+            });
+    
+            try {
+                const result = await response.json();
+
+                console.log('Response from server:', result);  // Log the response to the console
+                
+                if (response.status === 200) {
+                    const resultElement = document.getElementById('result');
+                    const resultText = `
+                        <p>Message: ${result.body.message} </p>
+                        <p>Net Annual Salary: $${result.body.salary} </p>
+                        <p>Tax Paid Annually: $${result.body.taxpaid} </p>
+                        <p>HECS Paid Annually: $${result.body.hecspaid} </p>
+                        <br>
+                        <p>Pay Frequency: ${result.body.payIncrement} </p>
+                        <p>Each Pay: $${result.body.netPay} ${payIncrement}</p>
+                        <p>Tax Paid each pay: $${result.body.incTax} ${payIncrement}</p>
+                        <p>HECS Paid each pay: $${result.body.incHecs} ${payIncrement}</p>
+                        
+                    `;
+                
+                    if (resultElement) {
+                        resultElement.innerHTML = resultText;
+                    } else {
+                        console.error('Result element not found:', resultText);
+                    }
+                } else {
+                    console.error('Error response from server:', result);
+                }
+            } catch (error) {
+                console.error('Error parsing JSON response:', error);
+            }
+        }
+    </script>
+
+</body>
+</html>
