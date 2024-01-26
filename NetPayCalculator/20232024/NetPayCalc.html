@@ -52,9 +52,14 @@
                 }),
             });
     
-            const result = await response.json();
-    
-            document.getElementById('result').innerHTML = `Net Pay: $${result.netPay} ${payFrequency}`;
+            const resultElement = document.getElementById('result');
+            const resultText = `Net Pay: $${result.netPay} ${payFrequency}`;
+
+            if (resultElement) {
+                resultElement.innerHTML = resultText;
+            } else {
+                console.error('Result element not found:', resultText);
+            }
         }
     </script>
 
