@@ -46,9 +46,11 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    salary: salary,
-                    hecsDebt: hecsDebt,
-                    payIncrement: payFrequency,
+                    body: {
+                        "salary": salary,
+                        "hecsDebt": hecsDebt,
+                        "payIncrement": payFrequency,
+                    }
                 }),
             });
     
