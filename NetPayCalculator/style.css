@@ -1,0 +1,82 @@
+/* General Styles */
+body {
+    margin: 0;
+    background: #020202;
+    width:100%;
+    height:100%;
+    font-family: 'Lato', sans-serif;
+    text-align: left;
+    color: #9CAFB7;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+div.navbar {
+  margin-left: 10%;
+}
+
+div.sidebar {
+  position: absolute;
+  display: block;
+  background-color: #A4CCA6;
+  width: 10%;
+}
+
+div.content {
+  position: fixed;
+  width: 60%;
+  margin-top: 2%;
+  margin-left: 20%;
+  margin-right: 20%;
+  float: top;
+  z-index: 9;
+}
+
+p {
+  margin-left: 10%;
+}
+
+
+/* Heading Styles */
+h1 {
+  font-family: 'Glory', sans-serif;
+  text-align: center;
+  color: #4281A4;
+  font-size: 4em;
+  font-weight: 900;
+}
+
+h4 {
+  text-align: center;
+  color: #4281A4;
+}
+
+
+/* Button Styles */
+button {
+  background-color: #9CAFB7;
+  border-radius: 5px;
+  box-shadow: 1px 1px 2px 2px;
+}
+
+button:hover {
+  background-color: #4281A4;
+  transition: 0.5s;
+}
+
+button:active {
+  background-color: #EAD2AC;
+}
+
+/* Results Styles */
+p.salary {
+  color: #D57A66;
+}
+
+p.tax {
+  color: #A4CCA6;
+}
+
+p.hecs {
+  color: #ACE894;
+}
